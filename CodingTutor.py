@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 
 import langchain
 import openai
@@ -39,7 +39,7 @@ def evaluate_project():
     context = llm.invoke(CREATE_CONTEXT_PROMPT.format(experience_level, frameworks_used, what_to_learn))
     project = llm.invoke(PROMPT.format(context))
 
-    return render_template('result.html', context=context, project=project)
+    return jsonify({'context': context, 'project': project})
 
 if __name__ == '__main__':
     app.run(debug=True)
