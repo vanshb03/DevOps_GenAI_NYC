@@ -1,0 +1,216 @@
+TDD Principles: Rock, Paper
+January 24, 2024
+What are the principles of Kent becks test desiderata?
+
+ChatGPT
+Kent Beck's Test Desiderata outlines principles for effective testing. It includes ideas like tests should be easy to write and fast to run, provide clear feedback, and focus on the essential aspects of the system.
+List the principles 
+
+ChatGPT
+Kent Beck's Test Desiderata includes principles like:
+
+Tests Must Be Readable: Tests should be easily understandable by anyone, not just the original author.
+Tests Should Be Fast: Quick test execution encourages frequent testing, aiding in early issue detection.
+Tests Should Be Deterministic: Tests should produce consistent results to reliably catch regressions.
+Tests Should Be Isolated: Each test should operate independently, avoiding dependencies on the execution order.
+Tests Should Be Repeatable: Running a test multiple times should yield the same result.
+Tests Should Be Self-Checking: Tests should automatically determine success or failure without manual intervention.
+Tests Should Be Timely: Write tests before the corresponding code to ensure a focus on the expected behavior.
+Tests Should Be Informative: Failed tests should provide clear and actionable information for debugging.
+Tests Should Be Maintainable: As the code evolves, tests should evolve with it, staying relevant and effective.
+What problems would I ask a novice programmer to solve using TDD and these principles?
+
+ChatGPT
+For a novice programmer learning Test-Driven Development (TDD) and applying Kent Beck's Test Desiderata, you might consider problems that emphasize foundational programming concepts. Here are some examples:
+
+Simple Calculator:
+Task: Build a basic calculator that can perform addition, subtraction, multiplication, and division.
+TDD Focus: Emphasize the importance of writing tests before implementing each operation.
+String Manipulation:
+Task: Create functions for common string operations like reversing, concatenating, or finding substrings.
+TDD Focus: Encourage the creation of tests to handle various cases and edge scenarios.
+List/Array Operations:
+Task: Implement functions for sorting, filtering, or finding elements in a list or array.
+TDD Focus: Emphasize writing tests for different input sizes and types.
+User Authentication:
+Task: Develop a basic user authentication system with features like user registration and login.
+TDD Focus: Highlight the need for testing user interactions and ensuring security.
+File I/O:
+Task: Create functions for reading from and writing to files.
+TDD Focus: Illustrate the importance of testing file operations with various file types and edge cases.
+Data Validation:
+Task: Design a form validation system for a simple web application.
+TDD Focus: Stress the significance of validating user inputs and handling different validation scenarios.
+Simple Game Logic:
+Task: Develop a basic game, such as Tic-Tac-Toe, with a focus on game logic.
+TDD Focus: Demonstrate how tests can ensure the correctness of game rules and interactions.
+These tasks allow novices to practice TDD principles in a structured manner, helping them understand how to write effective tests and build reliable software incrementally.
+Give example questions you would ask a student to create tests for rock paper scissor 
+
+ChatGPT
+Certainly! Here are example questions to guide a student in creating tests for a Rock, Paper, Scissors game:
+
+Test for Valid Moves:
+Question: How would you test that the game only accepts valid moves (Rock, Paper, Scissors)?
+Encourage writing tests that verify the game rejects invalid moves and accepts valid ones.
+Test for Game Outcome:
+Question: What tests would you create to ensure the game correctly determines the winner based on the rules of Rock, Paper, Scissors?
+Prompt the student to write tests for different combinations of player moves and expected outcomes.
+Test for Randomized Computer Move:
+Question: How can you test that the computer's move is randomized and follows a fair distribution (Rock, Paper, Scissors)?
+Guide them in creating tests to ensure the randomness of the computer's move over multiple game plays.
+Test for Ties:
+Question: What tests would cover scenarios where the game results in a tie?
+Have them write tests where both players choose the same move and confirm the game correctly handles ties.
+Test for Player Input Handling:
+Question: How would you test the game's response to different types of player inputs (uppercase, lowercase, mixed case)?
+Encourage writing tests to ensure the game handles player inputs consistently.
+Test for Game State Changes:
+Question: What tests would you create to verify that the game state changes appropriately after each round?
+Guide them in writing tests to confirm the update of scores, round counts, or any other relevant game state.
+Test for End Game Conditions:
+Question: How can you ensure that the game correctly ends when a predefined number of rounds is reached?
+Prompt them to write tests checking if the game concludes after the specified number of rounds.
+These questions help students consider various aspects of the Rock, Paper, Scissors game and develop tests to ensure its functionality, robustness, and correctness.
+Give example test cases for edge conditions 
+
+ChatGPT
+Certainly! Here are example test cases for edge conditions in a Rock, Paper, Scissors game:
+
+Edge Case: Empty Move:
+Test Case: Ensure the game handles a scenario where a player makes an empty move.
+Expected Outcome: The game should reject the empty move and prompt the player to enter a valid move.
+Edge Case: Invalid Move:
+Test Case: Test how the game responds when a player makes an invalid move (e.g., "Sword").
+Expected Outcome: The game should reject the invalid move and ask the player to enter a valid move.
+Edge Case: Case Sensitivity:
+Test Case: Verify that the game treats uppercase and lowercase moves equally (e.g., "Rock" vs. "rock").
+Expected Outcome: The game should recognize both cases as the same move.
+Edge Case: All Ties:
+Test Case: Play a series of rounds where both players consistently choose the same move.
+Expected Outcome: The game should result in ties for each round, and the overall outcome should be a draw.
+Edge Case: Maximum Rounds Reached:
+Test Case: Play the game with a limit of 3 rounds and ensure it correctly ends after the third round.
+Expected Outcome: The game should announce the winner or declare a draw if there's no clear winner after the specified rounds.
+Edge Case: Maximum Score Reached:
+Test Case: Play the game with a score limit of 5 and ensure it correctly ends when a player reaches the winning score.
+Expected Outcome: The game should declare the player with the highest score as the winner.
+Edge Case: Random Computer Moves:
+Test Case: Run the game for a large number of rounds and check if the computer's moves appear to be evenly distributed.
+Expected Outcome: The distribution of computer moves should approximate a fair random distribution.
+These edge test cases cover scenarios that go beyond typical gameplay, helping ensure the Rock, Paper, Scissors game handles various situations effectively.
+Give me an example of edge case tests in python.
+
+ChatGPT
+Certainly! Here's an example of edge case tests in Python using the unittest module for a simplified Rock, Paper, Scissors game:
+
+python
+Copy code
+import unittest
+from rock_paper_scissors_game import RockPaperScissorsGame  # Assuming you have a RockPaperScissorsGame class
+
+class TestRockPaperScissorsGame(unittest.TestCase):
+
+    def setUp(self):
+        self.game = RockPaperScissorsGame()
+
+    def test_empty_move_rejection(self):
+        with self.assertRaises(ValueError):
+            self.game.play_round("", "Paper")
+
+    def test_invalid_move_rejection(self):
+        with self.assertRaises(ValueError):
+            self.game.play_round("Sword", "Rock")
+
+    def test_case_insensitivity(self):
+        self.assertTrue(self.game.play_round("rock", "PAPER"))
+
+    def test_all_ties(self):
+        for _ in range(10):
+            result = self.game.play_round("Rock", "Rock")
+            self.assertEqual(result, "It's a tie!")
+
+    def test_maximum_rounds_reached(self):
+        for _ in range(self.game.max_rounds):
+            self.game.play_round("Paper", "Scissors")
+        self.assertEqual(self.game.check_winner(), "No winner. Maximum rounds reached.")
+
+    def test_maximum_score_reached(self):
+        for _ in range(self.game.winning_score):
+            self.game.play_round("Rock", "Scissors")
+        self.assertEqual(self.game.check_winner(), "Player 1 wins!")
+
+    def test_random_computer_moves_distribution(self):
+        move_counts = {"Rock": 0, "Paper": 0, "Scissors": 0}
+        for _ in range(1000):
+            computer_move = self.game.get_computer_move()
+            move_counts[computer_move] += 1
+
+        # Assert that each move occurs approximately 1/3 of the time
+        for count in move_counts.values():
+            self.assertAlmostEqual(count, 1000 / 3, delta=50)
+
+if __name__ == '__main__':
+    unittest.main()
+Note: This is a basic example, and you may need to adapt it based on your actual implementation of the Rock, Paper, Scissors game. Adjust the assertions and method calls according to your specific class methods and attributes.
+Add comments to the tests to explain what they do
+
+ChatGPT
+Certainly! Here's the same example with added comments to explain each test:
+
+python
+Copy code
+import unittest
+from rock_paper_scissors_game import RockPaperScissorsGame  # Assuming you have a RockPaperScissorsGame class
+
+class TestRockPaperScissorsGame(unittest.TestCase):
+
+    def setUp(self):
+        self.game = RockPaperScissorsGame()
+
+    # Test case for rejecting empty player moves
+    def test_empty_move_rejection(self):
+        with self.assertRaises(ValueError):
+            self.game.play_round("", "Paper")
+
+    # Test case for rejecting invalid player moves
+    def test_invalid_move_rejection(self):
+        with self.assertRaises(ValueError):
+            self.game.play_round("Sword", "Rock")
+
+    # Test case for case insensitivity of player moves
+    def test_case_insensitivity(self):
+        self.assertTrue(self.game.play_round("rock", "PAPER"))
+
+    # Test case for ensuring all rounds result in ties
+    def test_all_ties(self):
+        for _ in range(10):
+            result = self.game.play_round("Rock", "Rock")
+            self.assertEqual(result, "It's a tie!")
+
+    # Test case for ending the game when maximum rounds are reached
+    def test_maximum_rounds_reached(self):
+        for _ in range(self.game.max_rounds):
+            self.game.play_round("Paper", "Scissors")
+        self.assertEqual(self.game.check_winner(), "No winner. Maximum rounds reached.")
+
+    # Test case for ending the game when a player reaches the winning score
+    def test_maximum_score_reached(self):
+        for _ in range(self.game.winning_score):
+            self.game.play_round("Rock", "Scissors")
+        self.assertEqual(self.game.check_winner(), "Player 1 wins!")
+
+    # Test case for checking the distribution of random computer moves
+    def test_random_computer_moves_distribution(self):
+        move_counts = {"Rock": 0, "Paper": 0, "Scissors": 0}
+        for _ in range(1000):
+            computer_move = self.game.get_computer_move()
+            move_counts[computer_move] += 1
+
+        # Assert that each move occurs approximately 1/3 of the time
+        for count in move_counts.values():
+            self.assertAlmostEqual(count, 1000 / 3, delta=50)
+
+if __name__ == '__main__':
+    unittest.main()
+These comments provide a clear understanding of the purpose of each test case. Adjust them based on your specific implementation and the details of your Rock, Paper, Scissors game class.
