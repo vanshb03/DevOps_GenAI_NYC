@@ -1,9 +1,37 @@
 
 import langchain
 import openai
+import tiktoken
 
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.chat_models import ChatOpenAI
+
+
+
+########
+#Chunk up the RAG TD Chat GPT text file into 2500 character chunks
+enc = tiktoken.get_encoding("cl100k_base")
+def length_function(text: str) -> int:
+    return len(enc.encode(text))
+
+splitter = RecursiveCharacterTextSplitter(
+    separators=["\n\n", "\n", " ", ""],
+    chunk_size=2500, #try reducing the chunk size more significantly, then bumping up the k value (check out chatgpt)
+    chunk_overlap=480,
+    length_function=length_function,
+)
+file_path = 'RAGTDDCHATGPT.txt'
+with open(file_path, 'r', encoding='utf-8') as file:
+    text_content = file.read()
+chunks = splitter.split_text(text_content)
+
+#gotta load these chunks into a vector db
+########
+
+
+
+
+
 
 EXPERIENCE_LEVEL_QUESTION = 'Rate your coding ability on a scale of 1 to 5'
 print(EXPERIENCE_LEVEL_QUESTION)
