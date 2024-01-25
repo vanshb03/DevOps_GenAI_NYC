@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, api
+from flask import Flask, render_template, request, jsonify, app
 
 import langchain
 import openai
